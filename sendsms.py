@@ -1,18 +1,36 @@
-# we start with importing the twilio library to get the Client library
 from twilio.rest import Client
+from random import randint
 
-# we put the sid (or account_id) the auth_token (as usal)
-account_sid = 'AC55248ab4ccf061220ebf4b967514bd8c' 
-auth_token = '*************************' 
 
-client = Client(account_sid, auth_token) 
- 
-message = client.messages.create( 
-                              from_='+17069199386', 
-                              messaging_service_sid='MGc49185b85ddc4da9bc85941a36248170', 
-                              body='ameny',      
-                              to='+216 29581238' 
-                          ) 
- 
-#print(message.sid)
 
+# generate the code
+def code():
+    c = ""
+    for i in range(6):
+        c+=str(randint(0,9))
+    return int(c)
+# verification function
+def verify(num,n):
+    if num == n:
+        return True
+    else:
+        return False
+# the sending function using Twilio api
+def send(num):
+    account_sid = 'account_sid' 
+    auth_token = 'account_token' 
+
+    client = Client(account_sid, auth_token) 
+     
+    message = client.messages.create( 
+                                  from_='sender_number', 
+                                  messaging_service_sid='the_serveur', 
+                                  body= f'{num}',      
+                                  to='the_number_you_want_to_send_to' 
+                              )
+num = code()
+send(num)
+n = int(input("enter the code : "))
+while(verify(num,n)==False):
+    n = int(input("enter your phone number: "))
+print("welcome user")
