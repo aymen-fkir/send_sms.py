@@ -1,7 +1,9 @@
 from twilio.rest import Client
 from random import randint
 
-
+def sender():
+    n = int(input("enter your phone number: "))
+    return n
 
 # generate the code
 def code():
@@ -16,20 +18,20 @@ def verify(num,n):
     else:
         return False
 # the sending function using Twilio api
-def send(num):
+def send(num,n):
     account_sid = 'account_sid' 
     auth_token = 'account_token' 
 
     client = Client(account_sid, auth_token) 
      
     message = client.messages.create( 
-                                  from_='sender_number', 
+                                  from_=f'{n}', 
                                   messaging_service_sid='the_serveur', 
                                   body= f'{num}',      
                                   to='the_number_you_want_to_send_to' 
                               )
 num = code()
-send(num)
+send(num,sender())
 n = int(input("enter the code : "))
 while(verify(num,n)==False):
     n = int(input("enter your phone number: "))
